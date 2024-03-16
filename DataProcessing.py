@@ -96,8 +96,8 @@ class Data:
                 'MACD':macd
             }
 
-            proccessed_data = df.copy()
-            proccessed_data = proccessed_data.assign(**indicators)
+            processed_data = df.copy()
+            processed_data = processed_data.assign(**indicators)
 
             # Insert next day price into the data
             next_day_price = []
@@ -105,15 +105,14 @@ class Data:
                 next_day_price.append(df['Close'].iloc[i+1])
             next_day_price.append(0)
 
-            proccessed_data.insert(len(proccessed_data.columns),'Next Day Price',next_day_price)
-            proccessed_data = proccessed_data.drop(['Open','High','Low'],axis=1)
-            proccessed_data = proccessed_data.iloc[self.period:len(proccessed_data)-1]
+            processed_data.insert(len(processed_data.columns),'Next Day Price',next_day_price)
+            processed_data = processed_data.drop(['Open','High','Low'],axis=1)
+            processed_data = processed_data.iloc[self.period:len(processed_data)-1]
 
             # Save data
-            path = f'data/proccessed/{ticker}.csv'
-            proccessed_data.to_csv()
-            proccessed_data.to_csv(path,index=False)
-            print(f'Saved {ticker} data at data/proccessed/{ticker}.csv')
+            path = f'data/processed/{ticker}.csv'
+            processed_data.to_csv(path,index=False)
+            print(f'Saved {ticker} data at data/processed/{ticker}.csv')
     
     def get_index_names(self)->list:
         print(f'S&P 500: {self.SP500_tickers}\n VN: {self.VN_tickers}')
@@ -121,9 +120,9 @@ class Data:
 
     def get_data(self,index_name)->pd.DataFrame:
         try:
-            df = pd.read_csv(f'data/proccessed/{index_name}.csv')
+            df = pd.read_csv(f'data/processed/{index_name}.csv')
             return df
         except:
-            print(f'Data of {index_name} not existed/proccessed, try Data.preprocess({index_name})')
+            print(f'Data of {index_name} not existed/processed, try Data.preprocess({index_name})')
             return None
     
