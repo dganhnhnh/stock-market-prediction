@@ -43,22 +43,35 @@ class Data:
                 mfi.append(0)
                 so.append(0)
 
+            # TODO pos, neg cộng dồn 14 ngày trước
+
+            avg_gain = 0
+            avg_loss = 0
+
+            for i in range(1,self.period):
+                if(diff[i]>0):
+                    avg_gain+=diff[i]
+                else:
+                    avg_loss+=diff[i]
+            
+            avg_gain/=self.period
+            avg_loss/=self.period
 
             for i in range(self.period,len(diff)):
-                gain = 0
-                loss = 0
                 pos = 0
                 neg = 0
                 for j in range(i-self.period+1,i+1):
                     day_data = df.iloc[j]
                     if(diff[j]<0):
-                        loss+=diff[j]
+                        avg_loss = (avg_loss*(self.period-1)-diff[j])/self.period
                         neg += (day_data['High']+day_data['Low']+day_data['Close'])/3 * day_data['Volume']
                     else:
-                        gain+=diff[j]
+                        avg_gain = (avg_gain*(self.period-1)+diff[j])/self.period
                         pos += (day_data['High']+day_data['Low']+day_data['Close'])/3 * day_data['Volume']
-
-                rsi.append(100-100/(1+gain/-loss))
+                neg -= mfi[j-self.period]
+                pos -= mfi[j-self.period]
+                
+                rsi.append(100-100/(1+avg_gain/avg_loss))
                 mfi.append(100-(100/(1+pos/neg)))
                 
                 highest = -np.inf
@@ -85,7 +98,12 @@ class Data:
 
             for i in range(self.period,len(diff)):
                 ema_prev = np.mean(ema[i-12-1:i-1])
-                macd.append((df['Close'].iloc[i]-ema_prev)*0.15 + ema_prev)
+                ema_12 = (df['Close'].iloc[i]-ema_prev)*0.1538 + ema_prev
+                ema_26 = 0
+                if i > 26:
+                    ema_prev = np.mean(ema[i-26-1:i-1])
+                    ema_26 = (df['Close'].iloc[i]-ema_prev)*0.1538 + ema_prev
+                macd.append(ema_12-ema_26)
 
             # Insert indicators into the data
             indicators = {
