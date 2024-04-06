@@ -1,3 +1,7 @@
 yfinance
 scikit-learn
 matplotlib
+seaborn
+torch
+keras
+tensorflow
