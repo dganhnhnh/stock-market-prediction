@@ -111,7 +111,6 @@ class Data:
 
             # Save data
             path = f'data/processed/{ticker}.csv'
-            processed_data.to_csv()
             processed_data.to_csv(path,index=False)
             print(f'Saved {ticker} data at data/processed/{ticker}.csv')
     
