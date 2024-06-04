@@ -12,7 +12,7 @@ d=Data()
 list_tickers = d.get_sp500_tickers()
 
 # models = [GB_Model(), RF_Model(), ANN_BP_Model()]
-models = [GB_Model(), RF_Model(), ANN_BP_Model(max_iter=200), LSTM_Model(num_epoch=200), PSO_SVR_Model()]
+models = [LSTM_Model(num_epoch=200), PSO_SVR_Model(), ANN_BP_Model(max_iter=200), GB_Model(), RF_Model()]
 # models.append(GB_Model())
 # models.append(RF_Model())
 # models.append(ANN_BP_Model())
