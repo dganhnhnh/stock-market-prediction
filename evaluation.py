@@ -1,6 +1,10 @@
 import time
 from DataProcessing import Data
 from LSTM import LSTM_Model
+from PSO_SVR import PSO_SVR_Model
+from ANN_BP import ANN_BP_Model
+from GradientBoosting import GB_Model
+from RandomForest import RF_Model
 import numpy as np
 
 mae = []
@@ -14,7 +18,7 @@ d=Data()
 list_tickers = d.get_sp500_tickers()
 
 models = []
-models.append(LSTM_Model())
+models.append(PSO_SVR_Model())
 
 for model in models:
     for ticker in list_tickers:
@@ -41,5 +45,5 @@ for model in models:
     mape = np.mean(list(mape))
     avg_runtime = avg_runtime/len(list_tickers)
 
-    with open('output/evaluation.csv', 'a') as f:
-        f.write(f'{model.name},{mae},{mse},{r2},{rmse},{mape},{avg_runtime}\n')
+    with open('output/a.csv', 'a') as f:
+        f.write(f'{model.name},{mae:.4f},{mse:.4f},{r2:.4f},{rmse:.4f},{mape:.4f},{avg_runtime:.4f}\n')
