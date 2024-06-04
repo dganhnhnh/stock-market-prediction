@@ -8,8 +8,8 @@ def prepare_data(index, train_percent=0.8):
     d = Data()
     # d.preprocess(index)
     df = d.get_data(index)
-    X = df[df.columns[1:10]].values
-    Y = df[df.columns[10]].values
+    X = df[df.columns[0:8]].values
+    Y = df[df.columns[8]].values
 
     # TRAIN_PERCENT = 0.8
     train_size = int(train_percent*len(X))
