@@ -117,6 +117,9 @@ class Data:
     def get_index_names(self)->list:
         print(f'S&P 500: {self.SP500_tickers}\n VN: {self.VN_tickers}')
         return self.tickers
+    
+    def get_sp500_tickers(self)->list:
+        return self.SP500_tickers
 
     def get_data(self,index_name)->pd.DataFrame:
         try:
