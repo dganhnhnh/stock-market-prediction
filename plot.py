@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 
 
 d=Data()
-list_tickers = d.get_sp500_tickers()
+list_tickers = d.get_VN_tickers()
 
 # models = [GB_Model(), RF_Model(), ANN_BP_Model()]
 models = [LSTM_Model(num_epoch=200), PSO_SVR_Model(), ANN_BP_Model(max_iter=200), GB_Model(), RF_Model()]
@@ -23,7 +23,7 @@ for ticker in list_tickers:
     input_shape = 8
     
     d = Data()
-    # d.preprocess(ticker)
+    d.preprocess(ticker)
     df = d.get_data(ticker).drop(['Date', 'Volume'], axis=1)
 
     X = df[df.columns[0:input_shape]].values

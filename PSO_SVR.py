@@ -115,15 +115,15 @@ class PSO_SVR_Model:
 
         train_size = int(train_pct*len(X))
 
-        X_train = X[0:train_size]
+        self.X_train = X[0:train_size]
         self.Y_train = Y[0:train_size]
-        X_test = X[train_size:len(X)]
+        self.X_test = X[train_size:len(X)]
         self.Y_test = Y[train_size:len(Y)]
 
-        from sklearn.preprocessing import MinMaxScaler
-        scaler = MinMaxScaler()
-        self.X_train = scaler.fit_transform(X_train)
-        self.X_test = scaler.transform(X_test)
+        # from sklearn.preprocessing import MinMaxScaler
+        # scaler = MinMaxScaler()
+        # self.X_train = scaler.fit_transform(self.X_train)
+        # self.X_test = scaler.transform(self.X_test)
 
     def train(self):
         self.population = Population(

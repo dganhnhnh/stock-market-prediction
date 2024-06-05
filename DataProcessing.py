@@ -120,6 +120,9 @@ class Data:
     
     def get_sp500_tickers(self)->list:
         return self.SP500_tickers
+    
+    def get_VN_tickers(self)->list:
+        return self.VN_tickers
 
     def get_data(self,index_name)->pd.DataFrame:
         try:

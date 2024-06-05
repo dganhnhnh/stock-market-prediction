@@ -35,10 +35,10 @@ class LSTM_Model:
         X_test = X[train_size:len(X)]
         self.Y_test = Y[train_size:len(Y)]
 
-        from sklearn.preprocessing import MinMaxScaler
-        scaler = MinMaxScaler()
-        X_train = scaler.fit_transform(X_train)
-        X_test = scaler.transform(X_test)
+        # from sklearn.preprocessing import MinMaxScaler
+        # scaler = MinMaxScaler()
+        # X_train = scaler.fit_transform(X_train)
+        # X_test = scaler.transform(X_test)
 
         self.X_train = X_train.reshape(X_train.shape[0], 1, X_train.shape[1])
         self.X_test = X_test.reshape(X_test.shape[0], 1, X_test.shape[1])
