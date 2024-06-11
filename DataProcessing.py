@@ -106,7 +106,7 @@ class Data:
             next_day_price.append(0)
 
             processed_data.insert(len(processed_data.columns),'Next Day Price',next_day_price)
-            # processed_data = processed_data.drop(['Open','High','Low'],axis=1)
+            processed_data = processed_data.drop(['Open'],axis=1)
             processed_data = processed_data.iloc[self.period:len(processed_data)-1]
 
             # Save data

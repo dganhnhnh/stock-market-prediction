@@ -1,22 +1,17 @@
-import time
 from DataProcessing import Data
 from LSTM import LSTM_Model
 from PSO_SVR import PSO_SVR_Model
-from ANN_BP import ANN_BP_Model
+from SVR import SVR_Model
+from BP_DNN import ANN_BP_Model
 from GradientBoosting import GB_Model
 from RandomForest import RF_Model
 import matplotlib.pyplot as plt
 
 
 d=Data()
-list_tickers = d.get_VN_tickers()
+list_tickers = d.get_sp500_tickers()
 
-# models = [GB_Model(), RF_Model(), ANN_BP_Model()]
-models = [LSTM_Model(num_epoch=200), PSO_SVR_Model(), ANN_BP_Model(max_iter=200), GB_Model(), RF_Model()]
-# models.append(GB_Model())
-# models.append(RF_Model())
-# models.append(ANN_BP_Model())
-
+models = [LSTM_Model(num_epoch=200), PSO_SVR_Model(), ANN_BP_Model(max_iter=200), SVR_Model(), GB_Model(), RF_Model()]
 
 for ticker in list_tickers:
     train_pct = 0.7
@@ -36,26 +31,19 @@ for ticker in list_tickers:
     X_test = X[train_size:len(X)]
     Y_test = Y[train_size:len(Y)]
         
-    # Y_pred = [[]]
     plt.plot(Y_test, label='True value')
     model_labels = [model.name for model in models]
 
     for model in models:
-        # call model
         model.prepare_data(ticker)
         Y_pred= model.train()
         plt.plot(Y_pred, label=model.name)
 
-    # Customize the plot
     plt.xlabel('Time Step')
     plt.ylabel('Close Price')
     plt.title(f'Predictions for Ticker: {ticker}')
     plt.legend()
     plt.grid(True)
 
-    # Show the plot (optional, you can save it to a file)
-    # plt.show()
-    plt.savefig(f'output/plot/{ticker}.png')  # Save with ticker name
-
-    # Clear the plot for the next ticker (optional)
+    plt.savefig(f'output/plot/{ticker}.png')
     plt.clf()
